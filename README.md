@@ -18,7 +18,7 @@ Supabase (https://supabase.com/): minimal configuration, particularly in areas s
 
 ### Miscellaneous:
 
-As the application expands, I plan to gradually introduce other tools to enhance the developer experience. For example, I intend to incorporate MUI for faster design development, employ React Query to improve code quality and state management, and implement various types of tests, including unit tests.
+As the application expands, I plan to gradually introduce other tools to enhance the developer experience. For example, I intend to incorporate MUI (https://mui.com/) for faster design development, employ React Query (https://tanstack.com/) to improve code quality and state management, and implement various types of tests, including unit tests (https://jestjs.io/).
 
 ## Schema
 
