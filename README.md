@@ -210,7 +210,7 @@ export const DogsAPI = {
 
 ```javascript
 import { useState } from 'react';
-import { BookingAPI, DogsAPI } from '@api/walkTheDogAPI'
+import { BookingAPI, DogsAPI } from '@api/walkTheDogAPI';
 
 const Hour = ({ date, time, bookingData, userId }) => {
   const hasBookingData = Object.keys(bookingData).length > 0;
@@ -222,34 +222,38 @@ const Hour = ({ date, time, bookingData, userId }) => {
 
   const handleBooking = () => {
     BookingAPI.addBooking(userId, startTime, dogId);
-    setBooked(true)
-  }
+    setBooked(true);
+  };
 
   const handleCanceling = () => {
     BookingAPI.deleteBooking(startTime);
-    setBooked(false)
-  }
+    setBooked(false);
+  };
 
   useEffect(() => {
     /* TODO: Work with a designer on how to select a dog if there are more than one. Grab the first dog for now. */
-    const dogs = DogsAPI.getDogs(userId)
+    const dogs = DogsAPI.getDogs(userId);
 
     if (dogs) {
-      setDogName(dogs[0].name)
-      setDogId(dogs[0].id)
+      setDogName(dogs[0].name);
+      setDogId(dogs[0].id);
     }
-  }, [])
+  }, []);
 
   if (booked) {
     return (
       <div>
         <div>
           <div>{time}</div>
-          <button onClick={handleCanceling}>Cancel</button>
+          {bookingData.userId === userId ? (
+            <button onClick={handleCanceling}>Cancel</button>
+          ) : (
+            'Booked'
+          )}
         </div>
-        <div>
-          Your dog {dogName} is booked for a walk!
-        </div>
+        {bookingData.userId === userId && (
+          <div>Your dog {dogName} is booked for a walk!</div>
+        )}
       </div>
     );
   }
@@ -260,7 +264,7 @@ const Hour = ({ date, time, bookingData, userId }) => {
         <div>{time}</div>
         <button onClick={handleBooking}>Book</button>
       </div>
-    </div>;
-  )
+    </div>
+  );
 };
 ```
