@@ -56,20 +56,31 @@ Below is an example of an API layer that enables users to book time and edit the
 
 I will utilize the built in methods such as: `select()`, `insert()`, `update()`, and `delete()`.
 
+Remember to create a .env file with the following keys:
+
+```
+  NEXT_PUBLIC_SUPABASE_URL=<url>
+  NEXT_PUBLIC_SUPABASE_ANON_KEY=<key>
+```
+
+Documentation on how to obtain these keys can be found here: https://supabase.com/docs/guides/api/creating-routes#api-url-and-keys
+
+How the layer looks:
+
 ```
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 const supabase = createClientComponentClient();
 
 export const BookingsAPI = {
- /* startTime format: 'YYYY-MM-DD HH:MI:SS' */
+  /* startTime format: 'YYYY-MM-DD HH:MI:SS' */
 
   getBookings: async function(startTime) {
     try {
       const { data: bookings, error } = await supabase
         .from('bookings')
         .select()
-        .eq('date(startTime)', startTime)
+        .eq('date(startTime)', startTime) /* Using date() will allow you to retrieve bookings solely by the date and not time */
 
       return bookings
     } catch(error) {
@@ -81,7 +92,7 @@ export const BookingsAPI = {
       const { data: bookings, error } = await supabase
         .from('bookings')
         .select()
-        .eq('startTime', startTime)
+        .eq('startTime', startTime) /* Retrieve a booking by the date and time */
 
       return bookings
     } catch(error) {
