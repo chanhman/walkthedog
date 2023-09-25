@@ -71,7 +71,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 const supabase = createClientComponentClient();
 
-export const WalkTheDogAPI = {
+export const BookingAPI = {
   /* startTime format: 'YYYY-MM-DD HH:MI:SS' */
 
   getBookings: async function (startTime) {
@@ -198,5 +198,72 @@ export const DogsAPI = {
       console.log('error', error);
     }
   },
+};
+```
+
+## Booking component
+
+### Notes
+
+- I will use a calendar plugin that will have a day view, incrementing time by the hour
+- I will query all the rows in the Bookings table whose startTime contains the current date
+- For each hour, I will render the Hour component, passing the hour, selected date, and if a row from the Bookings table exists, the booking data to the component
+- When checking for bookingData, grab the dog id as well
+- Use the dog id then get its information like the dog's name
+
+```javascript
+import { useState } from 'react';
+import { BookingAPI, DogsAPI } from '@api/walkTheDogAPI'
+
+const Hour = ({ date, time, bookingData, userId }) => {
+  const hasBookingData = Object.keys(bookingData).length > 0;
+  const startTime = new Date(`${date}T${time}`);
+
+  const [booked, setBooked] = useState(hasBookingData);
+  const [dogName, setDogName] = useState('');
+  const [dogId, setDogId] = useState('');
+
+  const handleBooking = () => {
+    BookingAPI.addBooking(userId, startTime, dogId);
+    setBooked(true)
+  }
+
+  const handleCanceling = () => {
+    BookingAPI.deleteBooking(startTime);
+    setBooked(false)
+  }
+
+  useEffect(() => {
+    /* TODO: Work with a designer on how to select a dog if there are more than one. Grab the first dog for now. */
+    const dogs = DogsAPI.getDogs(userId)
+
+    if (dogs) {
+      setDogName(dogs[0].name)
+      setDogId(dogs[0].dogId)
+    }
+  }, [])
+
+  if (booked) {
+    return (
+      <div>
+        <div>
+          <div>{time}</div>
+          <button onClick={handleCanceling}>Cancel</button>
+        </div>
+        <div>
+          Your dog {dogName} is booked for a walk!
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div>
+        <div>{time}</div>
+        <button onClick={handleBooking}>Book</button>
+      </div>
+    </div>;
+  )
 };
 ```
