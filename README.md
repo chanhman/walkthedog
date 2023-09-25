@@ -19,3 +19,31 @@ Supabase (https://supabase.com/): minimal configuration, particularly in areas s
 ### Miscellaneous:
 
 As the application expands, I plan to gradually introduce other tools to enhance the developer experience. For example, I intend to incorporate MUI for faster design development, employ React Query to improve code quality and state management, and implement various types of tests, including unit tests.
+
+## Schema
+
+A basic example of how the schema would look like:
+
+```
+create table users (
+  userId uuid NOT NULL,
+  fullName text NOT NULL,
+  address text NOT NULL,
+  email text NOT NULL
+)
+
+create table dogs (
+  dogId uuid NOT NULL,
+  name text NOT NULL,
+  breed text NOT NULL,
+  avatarUri text NOT NULL,
+  ownerId uuid NOT NULL
+)
+
+create table bookings (
+  bookingId uuid NOT NULL,
+  startTime timestamp NOT NULL,
+  ownerId uuid NOT NULL,
+  dogId uuid NOT NULL
+)
+```
