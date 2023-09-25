@@ -1,4 +1,4 @@
-# walkthedog
+# Walk the Dog
 
 This is an app that allows me to keep track of who has made an appointment to walk their dogs.
 
@@ -74,63 +74,66 @@ const supabase = createClientComponentClient();
 export const WalkTheDogAPI = {
   /* startTime format: 'YYYY-MM-DD HH:MI:SS' */
 
-  getBookings: async function(startTime) {
+  getBookings: async function (startTime) {
     try {
       const { data: bookings, error } = await supabase
         .from('bookings')
         .select()
-        .eq('date(startTime)', startTime) /* Using date() will allow you to retrieve bookings solely by the date and not time */
+        .eq(
+          'date(startTime)',
+          startTime
+        ); /* Using date() will allow you to retrieve bookings solely by the date and not time */
 
-      return bookings
-    } catch(error) {
-      console.log('error', error)
+      return bookings;
+    } catch (error) {
+      console.log('error', error);
     }
   },
-  getBooking: async function(startTime) {
+  getBooking: async function (startTime) {
     try {
       const { data: bookings, error } = await supabase
         .from('bookings')
         .select()
-        .eq('startTime', startTime) /* Retrieve a booking by the date and time */
+        .eq(
+          'startTime',
+          startTime
+        ); /* Retrieve a booking by the date and time */
 
-      return bookings
-    } catch(error) {
-      console.log('error', error)
+      return bookings;
+    } catch (error) {
+      console.log('error', error);
     }
   },
-  addBooking: async function(startTime, userId, dogId) {
+  addBooking: async function (startTime, userId, dogId) {
     try {
       const { data: bookings } = await supabase
         .from('bookings')
         .insert({ startTime, userId, dogId })
-        .select()
+        .select();
 
-      return bookings
+      return bookings;
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
   },
-  deleteBooking: async function(startTime) {
+  deleteBooking: async function (startTime) {
     try {
-      await supabase.from('bookings').delete().eq('startTime', startTime)
+      await supabase.from('bookings').delete().eq('startTime', startTime);
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
   },
-}
+};
 
 export const UsersAPI = {
-  getUser: async function(userId) {
+  getUser: async function (userId) {
     try {
-      await supabase
-        .from('users')
-        .select()
-        .eq('userId', userId)
+      await supabase.from('users').select().eq('userId', userId);
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
   },
-  updateUser: async function(userId, fullName, address) {
+  updateUser: async function (userId, fullName, address) {
     try {
       await supabase
         .from('users')
@@ -138,44 +141,39 @@ export const UsersAPI = {
           fullName,
           address,
         })
-        .eq('userId', userId)
+        .eq('userId', userId);
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
   },
-}
+};
 
 export const DogsAPI = {
-  getDogs: async function(userId) {
+  getDogs: async function (userId) {
     try {
       const { data: dogs, error } = await supabase
         .from('dogs')
         .select()
-        .eq('userId', userId)
+        .eq('userId', userId);
 
-      return dogs
-    } catch(error) {
-      console.log('error', error)
+      return dogs;
+    } catch (error) {
+      console.log('error', error);
     }
   },
-  getDog: async function(dogId) {
+  getDog: async function (dogId) {
     try {
       const { data: dogs, error } = await supabase
         .from('dogs')
         .select()
-        .eq('dogId', dogId)
+        .eq('dogId', dogId);
 
-      return dogs
-    } catch(error) {
-      console.log('error', error)
+      return dogs;
+    } catch (error) {
+      console.log('error', error);
     }
   },
-  addDog: async function(
-    dogId,
-    name,
-    breed,
-    avatarUri,
-    userId) {
+  addDog: async function (dogId, name, breed, avatarUri, userId) {
     try {
       const { data: dogs } = await supabase
         .from('dogs')
@@ -184,21 +182,21 @@ export const DogsAPI = {
           name,
           breed,
           avatarUri,
-          userId
+          userId,
         })
-        .select()
+        .select();
 
-      return dogs
+      return dogs;
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
   },
-  deleteDog: async function(dog) {
+  deleteDog: async function (dog) {
     try {
-      await supabase.from('dogs').delete().eq('dogId', dogId)
+      await supabase.from('dogs').delete().eq('dogId', dogId);
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
   },
-}
+};
 ```
