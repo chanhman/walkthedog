@@ -26,13 +26,11 @@ A basic example of how the schema would look like:
 
 ```sql
 create table users (
-  userId uuid NOT NULL,
   fullName text NOT NULL,
   address text NOT NULL,
 )
 
 create table dogs (
-  dogId uuid NOT NULL,
   name text NOT NULL,
   breed text NOT NULL,
   avatarUri text NOT NULL,
@@ -173,12 +171,11 @@ export const DogsAPI = {
       console.log('error', error);
     }
   },
-  addDog: async function (dogId, name, breed, avatarUri, userId) {
+  addDog: async function (name, breed, avatarUri, userId) {
     try {
       const { data: dogs } = await supabase
         .from('dogs')
         .insert({
-          dogId,
           name,
           breed,
           avatarUri,
@@ -239,7 +236,7 @@ const Hour = ({ date, time, bookingData, userId }) => {
 
     if (dogs) {
       setDogName(dogs[0].name)
-      setDogId(dogs[0].dogId)
+      setDogId(dogs[0].id)
     }
   }, [])
 
