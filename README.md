@@ -42,7 +42,7 @@ create table dogs (
 
 create table bookings (
   bookingId uuid NOT NULL,
-  startTime timestamp NOT NULL,
+  startTime timestamp NOT NULL, --startTime format: 'YYYY-MM-DD HH:MI:SS'
   ownerId uuid NOT NULL,
   dogId uuid NOT NULL
 )
@@ -50,14 +50,63 @@ create table bookings (
 
 ## API Layer
 
-Supabase gives its users a set of libraries to access and modify table data. More information about it can be viewed here: https://supabase.com/docs/guides/api/creating-routes?language=javascript#rest-api
+One of the reasons of using Supabase is because they give its users a set of methods to access and modify table data. More information about it can be viewed here: https://supabase.com/docs/guides/api/creating-routes?language=javascript#rest-api
 
 Below is an example of an API layer that enables users to book time and edit their information such as their profile and what dogs they own.
 
+I will utilize the built in methods such as: `select()`, `insert()`, `update()`, and `delete()`.
+
 ```
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
+const supabase = createClientComponentClient();
+
 export const BookingsAPI = {
-  insert(),
-  delete(),
+ /* startTime format: 'YYYY-MM-DD HH:MI:SS' */
+
+  getBookings: async function(startTime) {
+    try {
+      const { data: bookings, error } = await supabase
+        .from('bookings')
+        .select()
+        .eq('date(startTime)', startTime)
+
+      return bookings
+    } catch(error) {
+      console.log('error', error)
+    }
+  },
+  getBooking: async function(startTime) {
+    try {
+      const { data: bookings, error } = await supabase
+        .from('bookings')
+        .select()
+        .eq('startTime', startTime)
+
+      return bookings
+    } catch(error) {
+      console.log('error', error)
+    }
+  },
+  addBooking: async function(startTime, userId, dogId) {
+    try {
+      const { data: bookings } = await supabase
+        .from('bookings')
+        .insert({ startTime, userId, dogId })
+        .select()
+
+      return bookings
+    } catch (error) {
+      console.log('error', error)
+    }
+  },
+  deleteBooking: async function(startTime) {
+    try {
+      await supabase.from('bookings').delete().eq('startTime', startTime)
+    } catch (error) {
+      console.log('error', error)
+    }
+  },
 }
 
 export const UsersAPI = {
