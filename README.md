@@ -47,3 +47,26 @@ create table bookings (
   dogId uuid NOT NULL
 )
 ```
+
+## API Layer
+
+Supabase gives its users a set of libraries to access and modify table data. More information about it can be viewed here: https://supabase.com/docs/guides/api/creating-routes?language=javascript#rest-api
+
+Below is an example of an API layer that enables users to book time and edit their information such as their profile and what dogs they own.
+
+```
+export const BookingsAPI = {
+  insert(),
+  delete(),
+}
+
+export const UsersAPI = {
+  update(),
+}
+
+export const DogsAPI = {
+  insert(),
+  update(),
+  delete(),
+}
+```
