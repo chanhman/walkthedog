@@ -24,7 +24,7 @@ As the application expands, I plan to gradually introduce other tools to enhance
 
 A basic example of how the schema would look like:
 
-```
+```sql
 create table users (
   userId uuid NOT NULL,
   fullName text NOT NULL,
@@ -57,21 +57,21 @@ I will utilize the built in methods such as: `select()`, `insert()`, `update()`,
 
 Remember to create a .env file with the following keys:
 
-```
+```env
   NEXT_PUBLIC_SUPABASE_URL=<url>
   NEXT_PUBLIC_SUPABASE_ANON_KEY=<key>
 ```
 
 Documentation on how to obtain these keys can be found here: https://supabase.com/docs/guides/api/creating-routes#api-url-and-keys
 
-How the layer looks:
+The layer consists of an object that allows you to edit users, dogs, and bookings in a single area. Import `WalkTheDogAPI` in your component to edit the data.
 
-```
+```javascript
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 const supabase = createClientComponentClient();
 
-export const BookingsAPI = {
+export const WalkTheDogAPI = {
   /* startTime format: 'YYYY-MM-DD HH:MI:SS' */
 
   getBookings: async function(startTime) {
