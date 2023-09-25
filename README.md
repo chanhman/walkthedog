@@ -205,6 +205,7 @@ export const DogsAPI = {
 - I will use a calendar plugin that will have a day view, incrementing time by the hour
 - I will query all the rows in the Bookings table whose startTime contains the current date
 - For each hour, I will render the Hour component, passing the hour, selected date, and if a row from the Bookings table exists, the booking data to the component
+- I will try to make this component as dumb as possible, only using data that has been passed to it
 - When checking for bookingData, grab the dog id as well
 - Use the dog id then get its information like the dog's name
 
