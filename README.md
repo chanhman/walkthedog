@@ -29,7 +29,6 @@ create table users (
   userId uuid NOT NULL,
   fullName text NOT NULL,
   address text NOT NULL,
-  email text NOT NULL
 )
 
 create table dogs (
@@ -37,13 +36,13 @@ create table dogs (
   name text NOT NULL,
   breed text NOT NULL,
   avatarUri text NOT NULL,
-  ownerId uuid NOT NULL
+  userId uuid NOT NULL
 )
 
 create table bookings (
   bookingId uuid NOT NULL,
   startTime timestamp NOT NULL, --startTime format: 'YYYY-MM-DD HH:MI:SS'
-  ownerId uuid NOT NULL,
+  userId uuid NOT NULL,
   dogId uuid NOT NULL
 )
 ```
@@ -121,12 +120,85 @@ export const BookingsAPI = {
 }
 
 export const UsersAPI = {
-  update(),
+  getUser: async function(userId) {
+    try {
+      await supabase
+        .from('users')
+        .select()
+        .eq('userId', userId)
+    } catch (error) {
+      console.log('error', error)
+    }
+  },
+  updateUser: async function(userId, fullName, address) {
+    try {
+      await supabase
+        .from('users')
+        .update({
+          fullName,
+          address,
+        })
+        .eq('userId', userId)
+    } catch (error) {
+      console.log('error', error)
+    }
+  },
 }
 
 export const DogsAPI = {
-  insert(),
-  update(),
-  delete(),
+  getDogs: async function(userId) {
+    try {
+      const { data: dogs, error } = await supabase
+        .from('dogs')
+        .select()
+        .eq('userId', userId)
+
+      return dogs
+    } catch(error) {
+      console.log('error', error)
+    }
+  },
+  getDog: async function(dogId) {
+    try {
+      const { data: dogs, error } = await supabase
+        .from('dogs')
+        .select()
+        .eq('dogId', dogId)
+
+      return dogs
+    } catch(error) {
+      console.log('error', error)
+    }
+  },
+  addDog: async function(
+    dogId,
+    name,
+    breed,
+    avatarUri,
+    userId) {
+    try {
+      const { data: dogs } = await supabase
+        .from('dogs')
+        .insert({
+          dogId,
+          name,
+          breed,
+          avatarUri,
+          userId
+        })
+        .select()
+
+      return dogs
+    } catch (error) {
+      console.log('error', error)
+    }
+  },
+  deleteDog: async function(dog) {
+    try {
+      await supabase.from('dogs').delete().eq('dogId', dogId)
+    } catch (error) {
+      console.log('error', error)
+    }
+  },
 }
 ```
