@@ -201,7 +201,7 @@ export const DogsAPI = {
 };
 ```
 
-## Booking component
+## Booking component and submission
 
 ### Notes
 
