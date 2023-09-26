@@ -9,10 +9,7 @@ export const dogsAPI = {
       .select()
       .eq('userId', userId);
 
-    if (error) {
-      return error;
-    }
-    return data;
+    return { data, error };
   },
   getDog: async function (dogId: number) {
     const { data, error } = await supabase
@@ -20,10 +17,7 @@ export const dogsAPI = {
       .select()
       .eq('dogId', dogId);
 
-    if (error) {
-      return error;
-    }
-    return data;
+    return { data, error };
   },
   addDog: async function (
     userId: number,
@@ -41,10 +35,7 @@ export const dogsAPI = {
       })
       .select();
 
-    if (error) {
-      return error;
-    }
-    return data;
+    return { data, error };
   },
   deleteDog: async function (dogId: number) {
     const { data, error } = await supabase
@@ -52,9 +43,6 @@ export const dogsAPI = {
       .delete()
       .eq('dogId', dogId);
 
-    if (error) {
-      return error;
-    }
-    return data;
+    return { data, error };
   },
 };

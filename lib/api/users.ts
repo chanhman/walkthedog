@@ -9,10 +9,7 @@ export const usersAPI = {
       .select()
       .eq('userId', userId);
 
-    if (error) {
-      return error;
-    }
-    return data;
+    return { data, error };
   },
   updateUser: async function (
     userId: number,
@@ -27,9 +24,6 @@ export const usersAPI = {
       })
       .eq('userId', userId);
 
-    if (error) {
-      return error;
-    }
-    return data;
+    return { data, error };
   },
 };

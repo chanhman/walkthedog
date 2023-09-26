@@ -14,11 +14,7 @@ export const bookingAPI = {
         startTime
       ); /* Using date() will allow you to retrieve bookings solely by the date and not time */
 
-    if (error) {
-      return error;
-    }
-
-    return data;
+    return { data, error };
   },
   getBooking: async function (startTime: Date) {
     const { data, error } = await supabase
@@ -26,10 +22,7 @@ export const bookingAPI = {
       .select()
       .eq('startTime', startTime); /* Retrieve a booking by the date and time */
 
-    if (error) {
-      return error;
-    }
-    return data;
+    return { data, error };
   },
   addBooking: async function (startTime: Date, userId: number, dogId: number) {
     const { data, error } = await supabase
@@ -37,19 +30,14 @@ export const bookingAPI = {
       .insert({ startTime, userId, dogId })
       .select();
 
-    if (error) {
-      return error;
-    }
-    return data;
+    return { data, error };
   },
   deleteBooking: async function (startTime: Date) {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('bookings')
       .delete()
       .eq('startTime', startTime);
 
-    if (error) {
-      return;
-    }
+    return { data, error };
   },
 };
