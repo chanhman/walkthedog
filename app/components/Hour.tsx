@@ -11,7 +11,19 @@ import React, { useState } from 'react';
 import { bookingAPI } from '../../lib/api/booking';
 import { dogsAPI } from '../../lib/api/dogs';
 
-export default function Hour({ date, time, bookingData, userId }) {
+type Props = {
+  date: string;
+  time: string;
+  bookingData: {
+    id: number;
+    startTime: Date;
+    userId: number;
+    dogId: number;
+  };
+  userId: number;
+};
+
+export default function Hour({ date, time, bookingData, userId }: Props) {
   const hasBookingData = Object.keys(bookingData).length > 0;
   const startTime = new Date(`${date}T${time}`);
 
@@ -20,7 +32,7 @@ export default function Hour({ date, time, bookingData, userId }) {
   const [dogId, setDogId] = useState('');
 
   const handleBooking = () => {
-    bookingAPI.addBooking(userId, startTime, dogId);
+    bookingAPI.addBooking(startTime, userId, dogId);
     setBooked(true);
   };
 
