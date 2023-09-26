@@ -55,9 +55,9 @@ create table bookings (
 
 > What does the API layer between the front and back end look like? Which routes are needed to display all the data in the wireframes and handle all potential actions?
 
-One of the reasons of using Supabase is because they give its users a set of methods to access and modify table data. More information about it can be viewed here: https://supabase.com/docs/guides/api/creating-routes?language=javascript#rest-api
+One of the reasons for using Supabase is that they provide their users with a set of methods to access and modify table data. More information about it can be viewed here: https://supabase.com/docs/guides/api/creating-routes?language=javascript#rest-api
 
-Below is an example of an API layer that enables users to book time and edit their information such as their profile and what dogs they own.
+Below is an example of a few API layers that enables users to book time and edit their information, such as their profile and the dogs they own.
 
 I will utilize the built in methods such as: `select()`, `insert()`, `update()`, and `delete()`.
 
@@ -82,7 +82,7 @@ Documentation on how to obtain these keys can be found here: https://supabase.co
 
 > Write the server side function that runs when a user presses “book” (pseudocode is fine)
 
-The component that allows you to book time can be view below. Given the time, I chose to follow Supabase's convention and utilized their methods to interact with the database (https://supabase.com/docs/guides/api/creating-routes?language=javascript#using-the-api).
+The component that allows you to book time can be viewed below. Given the time, I chose to follow Supabase's convention and utilized their methods to interact with the database.(https://supabase.com/docs/guides/api/creating-routes?language=javascript#using-the-api).
 
 - [Component](app/components/Hour.tsx)
 
