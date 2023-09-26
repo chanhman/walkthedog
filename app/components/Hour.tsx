@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 import { bookingAPI } from '../../lib/api/booking';
 import { dogsAPI } from '../../lib/api/dogs';
 
-const Hour = ({ date, time, bookingData, userId }) => {
+export default function Hour({ date, time, bookingData, userId }) {
   const hasBookingData = Object.keys(bookingData).length > 0;
   const startTime = new Date(`${date}T${time}`);
 
@@ -65,4 +65,4 @@ const Hour = ({ date, time, bookingData, userId }) => {
       </div>
     </div>
   );
-};
+}
