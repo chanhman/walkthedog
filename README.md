@@ -55,7 +55,27 @@ create table bookings (
 
 > What does the API layer between the front and back end look like? Which routes are needed to display all the data in the wireframes and handle all potential actions?
 
-One of the reasons for using Supabase is that they provide their users with a set of methods to access and modify table data. More information about it can be viewed here: https://supabase.com/docs/guides/api/creating-routes?language=javascript#rest-api
+I considered using Next.js's api routes to query data like so:
+
+```javascript
+// /api/bookings/route.ts
+
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+
+import type { Database } from '@/lib/database.types';
+
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: Request) {
+  const supabase = createRouteHandlerClient < Database > { cookies };
+  const { data } = await supabase.from('bookings').select();
+  return NextResponse.json(data);
+}
+```
+
+This felt like adding an extra layer that was not needed. One of the reasons for using Supabase is that they provide their users with a set of methods to access and modify table data. More information about it can be viewed here: https://supabase.com/docs/guides/api/creating-routes?language=javascript#rest-api
 
 Below is an example of a few API layers that enables users to book time and edit their information, such as their profile and the dogs they own.
 
