@@ -81,15 +81,6 @@ Below is an example of a few API layers that enables users to book time and edit
 
 I will utilize the built in methods such as: `select()`, `insert()`, `update()`, and `delete()`.
 
-Remember to create a .env file with the following keys:
-
-```env
-  NEXT_PUBLIC_SUPABASE_URL=<url>
-  NEXT_PUBLIC_SUPABASE_ANON_KEY=<key>
-```
-
-Documentation on how to obtain these keys can be found here: https://supabase.com/docs/guides/api/creating-routes#api-url-and-keys
-
 ### Layers
 
 - [Booking](lib/api/booking.ts)
