@@ -4,6 +4,8 @@ This is an app that allows me to keep track of who has made an appointment to wa
 
 ## Stack
 
+> Describe the stack you’d use to build this app and why you’d choose these technologies over others
+
 Considering the size of my company and the dual roles of developer and dog walker, I have opted to maintain a minimal tech stack. The selection of tools has been made based on the availability of resources, with the aim of tapping into a large developer community and accessing robust tools. Additionally, I prioritize a positive developer experience, so tools with excellent documentation were taken into account.
 
 ### Frontend
@@ -21,6 +23,8 @@ Supabase (https://supabase.com/): minimal configuration, particularly in areas s
 As the application expands, I plan to gradually introduce other tools to enhance the developer experience. For example, I intend to incorporate MUI (https://mui.com/) for faster design development, employ React Query (https://tanstack.com/) to improve code quality and state management, and implement various types of tests, including unit tests (https://jestjs.io/).
 
 ## Schema
+
+> Detail the database schema you would use to represent all of the data displayed in the wireframes (hint: keep it simple!)
 
 A basic example of how the schema would look like:
 
@@ -49,6 +53,8 @@ create table bookings (
 
 ## API Layer
 
+> What does the API layer between the front and back end look like? Which routes are needed to display all the data in the wireframes and handle all potential actions?
+
 One of the reasons of using Supabase is because they give its users a set of methods to access and modify table data. More information about it can be viewed here: https://supabase.com/docs/guides/api/creating-routes?language=javascript#rest-api
 
 Below is an example of an API layer that enables users to book time and edit their information such as their profile and what dogs they own.
@@ -71,6 +77,10 @@ Documentation on how to obtain these keys can be found here: https://supabase.co
 - [Users](lib/api/users.ts)
 
 ## Booking component and submission
+
+> Write a React or React Native component for a row in the calendar that handles the various states it can be in (available, booked with someone else’s dog, booked with your dog)
+
+> Write the server side function that runs when a user presses “book” (pseudocode is fine)
 
 The component that allows you to book time can be view below. Given the time, I chose to follow Supabase's convention and utilized their methods to interact with the database (https://supabase.com/docs/guides/api/creating-routes?language=javascript#using-the-api).
 
