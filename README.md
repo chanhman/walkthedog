@@ -72,72 +72,10 @@ Documentation on how to obtain these keys can be found here: https://supabase.co
 
 ## Booking component and submission
 
-### Notes
+The component that allows you to book time can be view below. Given the time, I chose to follow Supabase's convention and utilized their methods to interact with the database (https://supabase.com/docs/guides/api/creating-routes?language=javascript#using-the-api).
 
-- I will use a calendar plugin that will have a day view, incrementing time by the hour
-- I will query all the rows in the Bookings table whose startTime contains the current date
-- For each hour, I will render the Hour component, passing the hour, selected date, and if a row from the Bookings table exists, the booking data to the component
-- I will try to make this component as dumb as possible, only using data that has been passed to it
-- When checking for bookingData, grab the dog id as well
-- Use the dog id then get its information like the dog's name
+- [Component](app/components/Hour.tsx)
 
-```javascript
-import { useState } from 'react';
-import { BookingAPI, DogsAPI } from '@api/walkTheDogAPI';
+### Todo:
 
-const Hour = ({ date, time, bookingData, userId }) => {
-  const hasBookingData = Object.keys(bookingData).length > 0;
-  const startTime = new Date(`${date}T${time}`);
-
-  const [booked, setBooked] = useState(hasBookingData);
-  const [dogName, setDogName] = useState('');
-  const [dogId, setDogId] = useState('');
-
-  const handleBooking = () => {
-    BookingAPI.addBooking(userId, startTime, dogId);
-    setBooked(true);
-  };
-
-  const handleCanceling = () => {
-    BookingAPI.deleteBooking(startTime);
-    setBooked(false);
-  };
-
-  useEffect(() => {
-    /* TODO: Work with a designer on how to select a dog if there are more than one. Grab the first dog for now. */
-    const dogs = DogsAPI.getDogs(userId);
-
-    if (dogs) {
-      setDogName(dogs[0].name);
-      setDogId(dogs[0].id);
-    }
-  }, []);
-
-  if (booked) {
-    return (
-      <div>
-        <div>
-          <div>{time}</div>
-          {bookingData.userId === userId ? (
-            <button onClick={handleCanceling}>Cancel</button>
-          ) : (
-            'Booked'
-          )}
-        </div>
-        {bookingData.userId === userId && (
-          <div>Your dog {dogName} is booked for a walk!</div>
-        )}
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <div>
-        <div>{time}</div>
-        <button onClick={handleBooking}>Book</button>
-      </div>
-    </div>
-  );
-};
-```
+- [ ] Use Next.js's server components (?): https://nextjs.org/docs/app/building-your-application/data-fetching/forms-and-mutations#server-only-forms
