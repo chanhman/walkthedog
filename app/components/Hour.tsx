@@ -16,7 +16,7 @@ export default function Hour({ date, time }: { date: string; time: string }) {
 
   const router = useRouter();
 
-  const fetchCurrentUserId = async function () {
+  const getCurrentUserId = async function () {
     const supabase = createServerComponentClient({ cookies });
 
     const {
@@ -27,19 +27,19 @@ export default function Hour({ date, time }: { date: string; time: string }) {
       setCurrentUserId(user.id);
     }
   };
-  fetchCurrentUserId();
+  getCurrentUserId();
 
   const startDateAndTime = new Date(`${date}T${time}`);
-  const fetchBooking = async function () {
+  const getBooking = async function () {
     const results = await bookingAPI.getBooking(startDateAndTime);
 
     if (results.data) {
       setBookingData(results.data);
     }
   };
-  fetchBooking();
+  getBooking();
 
-  const fetchDogs = async function () {
+  const getDogs = async function () {
     const results = await dogsAPI.getDogs(currentUserId);
 
     if (results.data) {
@@ -47,7 +47,7 @@ export default function Hour({ date, time }: { date: string; time: string }) {
       setDogData(results.data[0]);
     }
   };
-  fetchDogs();
+  getDogs();
 
   const handleBooking = async function () {
     setLoadingMessage('Booking');
