@@ -1,70 +1,108 @@
-// ### Notes
-
-// - I will use a calendar plugin that will have a day view, incrementing time by the hour
-// - I will query all the rows in the Bookings table whose startTime contains the current date
-// - For each hour, I will render the Hour component, passing the hour, selected date, and if a row from the Bookings table exists, the booking data to the component
-// - I will try to make this component as dumb as possible, only using data that has been passed to it
-// - When checking for bookingData, grab the dog id as well
-// - Use the dog id then get its information like the dog's name
+'use client';
 
 import React, { useState } from 'react';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import { useRouter } from 'next/navigation';
 import { bookingAPI } from '../../lib/api/booking';
 import { dogsAPI } from '../../lib/api/dogs';
 
-type Props = {
-  date: string;
-  time: string;
-  bookingData: {
-    id: number;
-    startTime: Date;
-    userId: number;
-    dogId: number;
-  };
-  userId: number;
-};
+export default function Hour({ date, time }: { date: string; time: string }) {
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [bookingData, setBookingData] = useState(null);
+  const [dogData, setDogData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loadingMessage, setLoadingMessage] = useState('');
 
-export default function Hour({ date, time, bookingData, userId }: Props) {
-  const hasBookingData = Object.keys(bookingData).length > 0;
-  const startTime = new Date(`${date}T${time}`);
+  const router = useRouter();
 
-  const [booked, setBooked] = useState(hasBookingData);
-  const [dogName, setDogName] = useState('');
-  const [dogId, setDogId] = useState('');
+  const fetchCurrentUserId = async function () {
+    const supabase = createServerComponentClient({ cookies });
 
-  const handleBooking = () => {
-    bookingAPI.addBooking(startTime, userId, dogId);
-    setBooked(true);
-  };
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  const handleCanceling = () => {
-    bookingAPI.deleteBooking(startTime);
-    setBooked(false);
-  };
-
-  useEffect(() => {
-    /* TODO: Work with a designer on how to select a dog if there are more than one. Grab the first dog for now. */
-    const dogs = dogsAPI.getDogs(userId);
-
-    if (dogs) {
-      setDogName(dogs[0].name);
-      setDogId(dogs[0].id);
+    if (user) {
+      setCurrentUserId(user.id);
     }
-  }, []);
+  };
+  fetchCurrentUserId();
 
-  if (booked) {
+  const startDateAndTime = new Date(`${date}T${time}`);
+  const fetchBooking = async function () {
+    const results = await bookingAPI.getBooking(startDateAndTime);
+
+    if (results.data) {
+      setBookingData(results.data);
+    }
+  };
+  fetchBooking();
+
+  const fetchDogs = async function () {
+    const results = await dogsAPI.getDogs(currentUserId);
+
+    if (results.data) {
+      // We will grab the first dog for now
+      setDogData(results.data[0]);
+    }
+  };
+  fetchDogs();
+
+  const handleBooking = async function () {
+    setLoadingMessage('Booking');
+
+    const results = await bookingAPI.addBooking(
+      startDateAndTime,
+      currentUserId,
+      dogData.id
+    );
+
+    if (results.error) {
+      setErrorMessage(
+        'There was an issue booking this time. Please try again.'
+      );
+    }
+
+    if (results.data) {
+      router.refresh();
+    }
+    setLoadingMessage('');
+  };
+
+  const handleCanceling = async function () {
+    setLoadingMessage('Canceling');
+
+    const results = await bookingAPI.deleteBooking(startDateAndTime);
+
+    if (results.error) {
+      setErrorMessage(
+        'There was an issue canceling this time. Please try again.'
+      );
+    } else {
+      router.refresh();
+    }
+
+    setLoadingMessage('');
+  };
+
+  if (bookingData) {
     return (
       <div>
         <div>
-          <div>{time}</div>
-          {bookingData.userId === userId ? (
-            <button onClick={handleCanceling}>Cancel</button>
+          <time datetime={startDateAndTime}>{time}</time>
+          {currentUserId ? (
+            <button onClick={handleCanceling}>
+              {loadingMessage ? loadingMessage : 'Cancel'}
+            </button>
           ) : (
             'Booked'
           )}
         </div>
-        {bookingData.userId === userId && (
-          <div>Your dog {dogName} is booked for a walk!</div>
+        {currentUserId && dogData && (
+          <div>Your dog {dogData.name} is booked for a walk!</div>
         )}
+        {errorMessage && <div>{errorMessage}</div>}
       </div>
     );
   }
@@ -72,9 +110,12 @@ export default function Hour({ date, time, bookingData, userId }: Props) {
   return (
     <div>
       <div>
-        <div>{time}</div>
-        <button onClick={handleBooking}>Book</button>
+        <time datetime={startDateAndTime}>{time}</time>
+        <button onClick={handleBooking}>
+          {loadingMessage ? loadingMessage : 'Book'}
+        </button>
       </div>
+      {errorMessage && <div>{errorMessage}</div>}
     </div>
   );
 }
