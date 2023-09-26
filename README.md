@@ -10,8 +10,8 @@ Considering the size of my company and the dual roles of developer and dog walke
 
 ### Frontend
 
-- Next.js (https://nextjs.org/): versatile setup configurations and its ability to run on both the client and server sides, built-in support for TypeScript, various styling methods like CSS Modules, and integrated routing, reducing the need for extensive configuration. For instance, if I were to use React or Create React App alone, I would have to install and configure those tools separately.
-- TypeScript (https://www.typescriptlang.org/): For typing and intellisense, creates documentation of what components accepts.
+- Next.js (https://nextjs.org/): versatile setup configurations and its ability to run on both the client and server sides, built-in support for TypeScript, various styling methods like Tailwind, and integrated routing, reducing the need for extensive configuration. For instance, if I were to use React or Create React App alone, I would have to install and configure those tools separately.
+- TypeScript (https://www.typescriptlang.org/): For typing and intellisense, creates documentation of what components accept.
 - Tailwind (https://tailwindui.com/): Initially keeping the CSS simple and making the initial prototyping fast
 
 ### Backend
@@ -20,7 +20,7 @@ Supabase (https://supabase.com/): minimal configuration, particularly in areas s
 
 ### Miscellaneous:
 
-As the application expands, I plan to gradually introduce other tools to enhance the developer experience. For example, I intend to incorporate React Query (https://tanstack.com/) to improve code quality and state management, and implement various types of tests, including unit tests (https://jestjs.io/).
+As the application expands, I plan to gradually introduce other tools to enhance the developer experience. For example, I intend to incorporate React Query (https://tanstack.com/) to improve code quality and state management and implement various types of tests, including unit tests (https://jestjs.io/).
 
 ## Schema
 
@@ -55,7 +55,7 @@ create table bookings (
 
 > What does the API layer between the front and back end look like? Which routes are needed to display all the data in the wireframes and handle all potential actions?
 
-I considered using Next.js's api routes to query data like so:
+I considered using Next.js's API routes to query data like so:
 
 ```javascript
 // /api/bookings/route.ts
@@ -75,11 +75,11 @@ export async function GET(request: Request) {
 }
 ```
 
-This felt like adding an extra layer that was not needed. One of the reasons for using Supabase is that they provide their users with a set of methods to access and modify table data. More information about it can be viewed here: https://supabase.com/docs/guides/api/creating-routes?language=javascript#rest-api
+This felt like adding an extra layer that was not needed. One of the reasons for using Supabase is that it provides its users with a set of methods to access and modify table data. More information about it can be viewed here: https://supabase.com/docs/guides/api/creating-routes?language=javascript#rest-api
 
-Below is an example of a few API layers that enables users to book time and edit their information, such as their profile and the dogs they own.
+Below is an example of a few API layers that enable users to book time and edit their information, such as their profile and the dogs they own.
 
-I will utilize the built in methods such as: `select()`, `insert()`, `update()`, and `delete()`.
+I will utilize the built-in methods such as: `select()`, `insert()`, `update()`, and `delete()`.
 
 ### Layers
 
@@ -91,9 +91,9 @@ I will utilize the built in methods such as: `select()`, `insert()`, `update()`,
 
 > Write a React or React Native component for a row in the calendar that handles the various states it can be in (available, booked with someone else’s dog, booked with your dog)
 
-> Write the server side function that runs when a user presses “book” (pseudocode is fine)
+> Write the server-side function that runs when a user presses “book” (pseudocode is fine)
 
-The component that allows you to book time can be viewed below. Given the time, I chose to follow Supabase's convention and utilized their methods to interact with the database.(https://supabase.com/docs/guides/api/creating-routes?language=javascript#using-the-api).
+The component that allows you to book time can be viewed below. Given the time, I chose to follow Supabase's convention and utilized their methods to interact with the database. (https://supabase.com/docs/guides/api/creating-routes?language=javascript#using-the-api).
 
 - [Component](app/components/Hour.tsx)
 
