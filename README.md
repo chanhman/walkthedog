@@ -12,7 +12,7 @@ Considering the size of my company and the dual roles of developer and dog walke
 
 - Next.js (https://nextjs.org/): versatile setup configurations and its ability to run on both the client and server sides, built-in support for TypeScript, various styling methods like CSS Modules, and integrated routing, reducing the need for extensive configuration. For instance, if I were to use React or Create React App alone, I would have to install and configure those tools separately.
 - TypeScript (https://www.typescriptlang.org/): For typing and intellisense, creates documentation of what components accepts.
-- CSS Modules (https://github.com/css-modules/css-modules): Initially keeping the CSS simple, auto class name generation, no need to learn a specific way to write CSS (For example Tailwind). Other methods will be introduced as the application grows.
+- Tailwind (https://tailwindui.com/): Initially keeping the CSS simple and making the initial prototyping fast
 
 ### Backend
 
@@ -20,7 +20,7 @@ Supabase (https://supabase.com/): minimal configuration, particularly in areas s
 
 ### Miscellaneous:
 
-As the application expands, I plan to gradually introduce other tools to enhance the developer experience. For example, I intend to incorporate MUI (https://mui.com/) for faster design development, employ React Query (https://tanstack.com/) to improve code quality and state management, and implement various types of tests, including unit tests (https://jestjs.io/).
+As the application expands, I plan to gradually introduce other tools to enhance the developer experience. For example, I intend to incorporate React Query (https://tanstack.com/) to improve code quality and state management, and implement various types of tests, including unit tests (https://jestjs.io/).
 
 ## Schema
 
@@ -99,4 +99,5 @@ The component that allows you to book time can be viewed below. Given the time, 
 
 ### Todo:
 
+- [ ] Create separate components to handle buttons, error messages, containers
 - [ ] Use Next.js's server components (?): https://nextjs.org/docs/app/building-your-application/data-fetching/forms-and-mutations#server-only-forms
