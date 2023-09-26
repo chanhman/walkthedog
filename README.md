@@ -16,7 +16,7 @@ Considering the size of my company and the dual roles of developer and dog walke
 
 ### Backend
 
-Supabase (https://supabase.com/): minimal configuration, particularly in areas such as database management, storage, and user authentication. While alternatives like Firebase are available, opting for a tool that utilizes Postgres opens up opportunities for accessing additional resources and allows for easy service switching, avoiding vendor lock-in.
+Supabase (https://supabase.com/): minimal configuration, particularly in areas such as database management, storage, and user authentication. While alternatives like Firebase are available, opting for a tool that utilizes Postgres opens up opportunities for accessing additional resources and allows for easy service switching.
 
 ### Miscellaneous:
 
